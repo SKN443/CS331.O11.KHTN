@@ -25,3 +25,4 @@ git clone https://github.com/SKN443/CS331.O11.KHTN.git  # clone
 cd CS331.O11.KHTN
 pip install -r requirements.txt  # install
 ```
+</details>
