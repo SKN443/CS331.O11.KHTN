@@ -42,7 +42,7 @@ python initialization.py
 <details open>
 <summary>Host app</summary>
 
-Running [test.py](https://github.com/SKN443/CS331.O11.KHTN/blob/main/Project/test.py) to host your app:
+Run [test.py](https://github.com/SKN443/CS331.O11.KHTN/blob/main/Project/test.py) to host your app:
 
 ```python
 streamlit run test.py
