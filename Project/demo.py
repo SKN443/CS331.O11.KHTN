@@ -83,7 +83,7 @@ def option2pyt(model, version, opt, size):
     model2inf = {
         'yolov5' : 'python ' + root + 'repo/yolov5/detect.py',
         'yolov6' : 'python ' + root + 'tools/infer.py',
-        'yolov7' : 'python ' + root + 'repo/yolov7/detect.py',
+        'yolov7' : 'python ' + root + 'detect.py',
         'yolov8' : 'yolo predict'
     }
     return model2inf[model], 'model/' + model + '/' + model + version2opt[version] + size2opt[size] + opt2opt[opt] + '.pt'
@@ -95,7 +95,7 @@ if st.button('Predict'):
     opt_hide_conf = ['', '--hide-conf'][int(hide_conf)]
     if (model_root and version and optimizer):
         inference, pt = option2pyt(model_root, version, optimizer, image_size)
-    if (model_root=='yolov6'):
+    if (model_root!='yolov5'):
         pt = '../../'+pt
     url = ""
     name = ""
@@ -104,11 +104,11 @@ if st.button('Predict'):
             name = str(datetime.now()).replace(' ', '').replace('-', '').replace(':', '').replace('.', '')
             image_name = uploaded_file.file_id+'.jpg'
             url = "demo/uploaded_images/"+image_name
-            if (model_root=='yolov6'):
+            if (model_root!='yolov5'):
                 url = '../../'+url
             infer_call = {
                 'yolov5' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf} --line-thickness 1',
-                'yolov6' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf} --yaml ../../data.yaml',
+                'yolov6' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf}',
                 'yolov7' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf}',
                 'yolov8' : f'{inference} model={pt} source={url} name={name}'
             }
@@ -116,9 +116,13 @@ if st.button('Predict'):
 #predict and save output
             if (model_root=='yolov6'):
                 os.chdir('repo/yolov6')
+            if (model_root=='yolov7'):
+                os.chdir('repo/yolov7')
+            if (model_root=='yolov8'):
+                os.chdir('repo/ultralytics')
             call_arg = infer_call[model_root]
             os.system(call_arg)
-            if (model_root=='yolov6'):
+            if (model_root!='yolov5'):
                 os.chdir('..')
                 os.chdir('..')
 
@@ -126,8 +130,10 @@ if st.button('Predict'):
                 'yolov5' : 'repo\\yolov5\\runs\\detect\\',
                 'yolov6' : 'repo\\yolov6\\runs\\inference\\',
                 'yolov7' : 'repo\\yolov7\\runs\\detect\\',
-                'yolov8' : 'runs\\detect\\',
+                'yolov8' : 'repo\\ultralytics\\runs\\detect\\',
             }
+            print(model_root)
+            print(name)
             img_path = (glob.glob(save_path[model_root] + name + '\\*.*')[0])#.replace('\\', '/')
             save_command = 'copy '+img_path+' demo\\demo_results\\'+model_root+'\\'+name+'.jpg'
             print(save_command)
