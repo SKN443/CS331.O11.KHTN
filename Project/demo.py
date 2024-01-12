@@ -12,7 +12,7 @@ model_list = ["yolov5", "yolov6", "yolov7", "yolov8"]
 ver_dict = {
     None: [],
     "yolov5": ["nano", "small", "medium", "large", "x"],
-    "yolov6": ["nano", "small", "medium", "large"],
+    "yolov6": ["nano", "small", "medium", "large", "m6", "n6", "l6", "s6"],
     "yolov7": ["", "tiny", "x", "w6", "e6", "d6"],
     "yolov8": ["nano", "small", "medium", "large"]}
 opt_dict = {
@@ -70,7 +70,11 @@ def option2pyt(model, version, opt, size):
         'x' : 'x',
         'w6' : 'w',
         'e6' : 'e',
-        'd6' : 'd'
+        'd6' : 'd',
+        "m6" : 'm',
+        "n6" : 'n', 
+        "l6" : 'l', 
+        "s6" : 's'
     }
     size2opt = {
         640 : '',
@@ -108,7 +112,7 @@ if st.button('Predict'):
                 url = '../../'+url
             infer_call = {
                 'yolov5' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf} --line-thickness 1',
-                'yolov6' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf}',
+                'yolov6' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf} --yaml ../../data.yaml',
                 'yolov7' : f'{inference} --weights {pt} --source {url} --name {name} {opt_hide_labels} {opt_hide_conf}',
                 'yolov8' : f'{inference} model={pt} source={url} name={name}'
             }
