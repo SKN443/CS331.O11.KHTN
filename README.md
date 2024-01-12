@@ -17,7 +17,7 @@ Repository uses in course CS331.O11.KHTN - Advanced computer vision
 <details open>
 <summary>Install</summary>
 
-Clone repo and install streamlit in a
+Clone repo and install streamlit-related libraries in a
 [**Python>=3.11.0**](https://www.python.org/) environment
 
 ```bash
@@ -25,6 +25,7 @@ git clone https://github.com/SKN443/CS331.O11.KHTN.git  # clone
 cd CS331.O11.KHTN
 pip install streamlit  
 pip install streamlit-image-select
+pip install st-pages
 ```
 </details>
 
